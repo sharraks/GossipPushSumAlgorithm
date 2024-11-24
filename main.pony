@@ -1,4 +1,5 @@
 use "package:./topology"
+use "time"
 
 actor Main
   var _env:Env
@@ -26,10 +27,53 @@ actor Main
     end
 
     match topology
-    | "full" => env.out.print("first")
-    | "3d" => env.out.print("Second")
-    | "line" => env.out.print("third")
-    | "imp3d" => env.out.print("fourth")
+    
+    | "full" => 
+    if algo == "gossip" then
+       let f = FullGossip(_env, numNodes, "Naruto is the OG Anime!!")
+       f.buildTopology()
+       f.startProcessing()
+      
+    else
+       let f = FullPushSum(_env, numNodes, (0,1))
+       f.buildTopology()
+       f.startProcessing()
+    end
+    
+    
+    | "3d" => 
+    if algo == "gossip" then
+       let f = ThreeDGossip(_env, numNodes, "Naruto is the OG Anime!!")
+       f.buildTopology()
+       f.startProcessing()
+    else
+       let f = ThreeDPushSum(_env, numNodes, (0,1))
+       f.buildTopology()
+       f.startProcessing()
+    end
+  
+    | "line" => 
+    if algo == "gossip" then
+       let f = LineGossip(_env, numNodes, "Naruto is the OG Anime!!")
+       f.buildTopology()
+       f.startProcessing()
+    else
+       let f = LinePushSum(_env, numNodes, (0,1))
+       f.buildTopology()
+       f.startProcessing()
+    end
+    
+    | "imp3d" => 
+    if algo == "gossip" then
+       let f = Imp3DGossip(_env, numNodes, "Naruto is the OG Anime!!")
+       f.buildTopology()
+       f.startProcessing()
+    else
+       let f = Imp3DPushSum(_env, numNodes, (0,1)) 
+       f.buildTopology()
+       f.startProcessing()
+    end
+    
     else
     env.out.print("Incorrect Input")
     options()
